@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「天枢」方案深度补充包 · 赛力斯 AI 数字员工命题</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#1f2328; --muted:#57606a; --border:#d0d7de;
+  --accent:#0969da; --accent-soft:#ddf4ff; --code-bg:#f6f8fa;
+  --table-head:#57606a; --table-stripe:#f6f8fa; --quote-bg:#fff8c5;
+  --sidebar-bg:#f6f8fa; --h2-bar:#0969da;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  font-size:15px; line-height:1.75;
+}
+/* 顶部页头 */
+.header{
+  background:linear-gradient(135deg,#0969da 0%,#218bff 100%);
+  color:#fff; padding:32px 40px 28px; margin-left:280px;
+}
+.header h1{margin:0 0 8px; font-size:26px; font-weight:700; letter-spacing:.5px;}
+.header .meta{font-size:13px; opacity:.92; line-height:1.9;}
+.header .meta b{font-weight:600;}
+.header .badges{margin-top:12px;}
+.header .badge{
+  display:inline-block; background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.35); border-radius:12px;
+  padding:3px 12px; font-size:12px; margin-right:8px; backdrop-filter:blur(4px);
+}
+/* 侧边目录 */
+.sidebar{
+  position:fixed; top:0; left:0; width:280px; height:100vh;
+  background:var(--sidebar-bg); border-right:1px solid var(--border);
+  overflow-y:auto; padding:24px 16px; font-size:13px;
+}
+.sidebar .toc-title{
+  font-size:12px; text-transform:uppercase; letter-spacing:1px;
+  color:var(--muted); font-weight:700; margin:0 0 12px 8px;
+}
+.sidebar ul{list-style:none; margin:0; padding:0;}
+.sidebar li{margin:0;}
+.sidebar a{
+  display:block; padding:6px 10px; color:var(--fg); text-decoration:none;
+  border-radius:6px; border-left:2px solid transparent; transition:all .15s;
+  line-height:1.5;
+}
+.sidebar a:hover{background:#eaeef2; border-left-color:var(--accent);}
+.sidebar .toc-level-2 > a{font-weight:600; margin-top:6px;}
+.sidebar .toc-level-3 > a{padding-left:24px; font-size:12.5px; color:var(--muted);}
+.sidebar .toc-level-4 > a{padding-left:38px; font-size:12px; color:var(--muted);}
+/* 主体内容 */
+.content{
+  margin-left:280px; padding:36px 48px 80px; max-width:920px;
+}
+.content h1{
+  font-size:24px; border-bottom:2px solid var(--h2-bar);
+  padding-bottom:10px; margin-top:48px; margin-bottom:20px;
+}
+.content h1:first-child{margin-top:0;}
+.content h2{
+  font-size:20px; margin-top:36px; margin-bottom:14px;
+  padding-left:12px; border-left:4px solid var(--h2-bar);
+  color:var(--fg);
+}
+.content h3{font-size:17px; margin-top:24px; margin-bottom:10px; color:#24292f;}
+.content h4{font-size:15px; margin-top:18px; margin-bottom:8px; color:var(--muted);}
+.content p{margin:12px 0;}
+.content a{color:var(--accent); text-decoration:none;}
+.content a:hover{text-decoration:underline;}
+.content strong{font-weight:600; color:#24292f;}
+.content hr{border:none; border-top:1px solid var(--border); margin:32px 0;}
+/* 引用块 */
+.content blockquote{
+  margin:16px 0; padding:14px 18px; background:var(--quote-bg);
+  border-left:4px solid #d4a72c; border-radius:0 6px 6px 0; color:#4d3a08;
+}
+.content blockquote p{margin:6px 0;}
+/* 表格 */
+.content table{
+  border-collapse:collapse; width:100%; margin:18px 0; font-size:13.5px;
+  display:block; overflow-x:auto;
+}
+.content th{
+  background:var(--table-head); color:#fff; font-weight:600;
+  padding:10px 14px; text-align:left; border:1px solid var(--border);
+  white-space:nowrap;
+}
+.content td{padding:9px 14px; border:1px solid var(--border); vertical-align:top;}
+.content tr:nth-child(even) td{background:var(--table-stripe);}
+.content tr:hover td{background:#eaeef2;}
+/* 代码块 */
+.codehilite{
+  background:var(--code-bg); border:1px solid var(--border);
+  border-left:3px solid var(--accent); border-radius:6px;
+  margin:16px 0; overflow-x:auto;
+}
+.codehilite pre{margin:0; padding:14px 16px;}
+.codehilite code, .content pre code, .content code{
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,
+    "Courier New",monospace; font-size:13px;
+}
+.content :not(.codehilite) > code{
+  background:var(--code-bg); padding:2px 6px; border-radius:4px;
+  color:#cf222e; font-size:12.5px;
+}
+/* 纯文本围栏代码（ASCII 图等，无语言）*/
+.content pre{
+  background:var(--code-bg); border:1px solid var(--border);
+  border-left:3px solid #6e7781; border-radius:6px;
+  padding:14px 16px; overflow-x:auto; margin:16px 0;
+}
+.content pre code{color:var(--fg); background:none; padding:0;}
+/* pygments 高亮微调 */
+.codehilite .k{font-weight:600;}
+.codehilite .c{color:#6e7781; font-style:italic;}
+/* 目录锚点偏移（固定侧边栏时避免标题被遮挡，这里无顶栏所以小偏移即可）*/
+.content h1, .content h2, .content h3{scroll-margin-top:16px;}
+/* 打印优化 */
+@media print{
+  .sidebar{display:none;}
+  .header, .content{margin-left:0;}
+  .content{max-width:100%; padding:20px;}
+  .codehilite, .content pre{page-break-inside:avoid;}
+}
+/* 窄屏适配 */
+@media (max-width:900px){
+  .sidebar{position:static; width:auto; height:auto; border-right:none; border-bottom:1px solid var(--border);}
+  .header, .content{margin-left:0;}
+  .header{padding:24px 20px;}
+  .content{padding:24px 20px 60px;}
+}
+
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <p class="toc-title">📑 目录导航</p>
+  <div class="toc">
+<ul>
+<li><a href="#ai">「天枢」方案深度补充包 · 赛力斯 AI 数字员工命题</a><ul>
+<li><a href="#_1">目录</a></li>
+<li><a href="#_2">一、方案总览与设计哲学</a><ul>
+<li><a href="#11">1.1 一句话定义</a></li>
+<li><a href="#12">1.2 设计哲学：三个范式跃迁</a></li>
+<li><a href="#13">1.3 为什么叫「天枢」</a></li>
+<li><a href="#14">1.4 系统总览图</a></li>
+</ul>
+</li>
+<li><a href="#_3">二、四层闭环架构详解</a><ul>
+<li><a href="#21-perception">2.1 感知层（Perception）</a></li>
+<li><a href="#22-cognition">2.2 认知层（Cognition）—— 核心层</a></li>
+<li><a href="#23-interaction">2.3 交互层（Interaction）</a></li>
+<li><a href="#24-execution">2.4 执行层（Execution）</a></li>
+<li><a href="#25-evolution">2.5 进化层（Evolution）</a></li>
+</ul>
+</li>
+<li><a href="#_4">三、本体论建模完整方案</a><ul>
+<li><a href="#31-rag">3.1 为什么必须用本体论（而非纯向量 RAG）</a></li>
+<li><a href="#32">3.2 三元本体模型</a></li>
+<li><a href="#33-owl">3.3 完整 OWL 本体定义（核心片段）</a></li>
+<li><a href="#34">3.4 本体论实例化（赛力斯真实设备）</a></li>
+</ul>
+</li>
+<li><a href="#graph-rag">四、Graph RAG 引擎深度设计</a><ul>
+<li><a href="#41-graph-rag-vs-rag">4.1 Graph RAG vs 传统向量 RAG</a></li>
+<li><a href="#42">4.2 三阶段检索流程</a></li>
+<li><a href="#43-graph-rag">4.3 Graph RAG 核心代码</a></li>
+<li><a href="#44">4.4 性能指标设计</a></li>
+</ul>
+</li>
+<li><a href="#_5">五、多智能体协同机制</a><ul>
+<li><a href="#51-agent">5.1 三 Agent 协同架构</a></li>
+<li><a href="#52-react">5.2 ReAct 框架实现</a></li>
+<li><a href="#53-agent">5.3 Agent 工具链清单</a></li>
+</ul>
+</li>
+<li><a href="#ai_1">六、飞书 AI 能力集成方案</a><ul>
+<li><a href="#61-ai">6.1 飞书 AI 能力使用清单（命中命题硬性要求）</a></li>
+<li><a href="#62">6.2 飞书多维表格工单设计</a></li>
+<li><a href="#63-aily-bot">6.3 飞书 Aily Bot 配置</a></li>
+</ul>
+</li>
+<li><a href="#_6">七、异常检测与边缘计算</a><ul>
+<li><a href="#71">7.1 三级异常检测策略</a></li>
+<li><a href="#72-spc">7.2 SPC 控制限设计示例</a></li>
+<li><a href="#73">7.3 边缘计算硬件选型建议</a></li>
+</ul>
+</li>
+<li><a href="#_7">八、数字孪生联动与执行闭环</a><ul>
+<li><a href="#81">8.1 数字孪生验证流程</a></li>
+<li><a href="#82">8.2 执行层联动接口</a></li>
+</ul>
+</li>
+<li><a href="#_8">九、知识图谱持续进化机制</a><ul>
+<li><a href="#91">9.1 知识来源四象限</a></li>
+<li><a href="#92">9.2 老师傅经验数字化流程</a></li>
+<li><a href="#93">9.3 知识图谱进化指标</a></li>
+</ul>
+</li>
+<li><a href="#_9">十、数据安全与合规设计</a><ul>
+<li><a href="#101">10.1 数据分级与脱敏</a></li>
+<li><a href="#102">10.2 权限控制矩阵</a></li>
+<li><a href="#103">10.3 合规要点</a></li>
+</ul>
+</li>
+<li><a href="#_10">十一、竞品对比深度矩阵</a><ul>
+<li><a href="#111">11.1 技术能力对比</a></li>
+<li><a href="#112">11.2 范式定位图</a></li>
+</ul>
+</li>
+<li><a href="#-">十二、用户痛点-技术能力映射</a><ul>
+<li><a href="#121">12.1 问界用户真实反馈深度分析</a></li>
+<li><a href="#122">12.2 痛点验证逻辑</a></li>
+</ul>
+</li>
+<li><a href="#poc">十三、POC 实施路径与里程碑</a><ul>
+<li><a href="#131-gantt">13.1 三期推广 Gantt 图</a></li>
+<li><a href="#132-wbs">13.2 一期 WBS 工作分解</a></li>
+<li><a href="#133">13.3 可行性依据</a></li>
+</ul>
+</li>
+<li><a href="#_11">十四、技术选型对比论证</a><ul>
+<li><a href="#141">14.1 知识图谱数据库</a></li>
+<li><a href="#142-agent">14.2 Agent 框架</a></li>
+<li><a href="#143-llm">14.3 LLM 选型</a></li>
+<li><a href="#144">14.4 本体推理机</a></li>
+</ul>
+</li>
+<li><a href="#kpi">十五、KPI 仪表盘与量化指标</a><ul>
+<li><a href="#151-kpi">15.1 核心 KPI</a></li>
+<li><a href="#152">15.2 飞书多维表格仪表盘设计</a></li>
+</ul>
+</li>
+<li><a href="#_12">十六、风险与降级策略</a><ul>
+<li><a href="#161">16.1 技术风险与应对</a></li>
+<li><a href="#162-graceful-degradation">16.2 降级策略（Graceful Degradation）</a></li>
+</ul>
+</li>
+<li><a href="#_13">十七、参考资料清单</a><ul>
+<li><a href="#_14">行业报告</a></li>
+<li><a href="#_15">竞品案例</a></li>
+<li><a href="#_16">赛力斯公开信息</a></li>
+<li><a href="#_17">技术参考</a></li>
+<li><a href="#_18">用户反馈来源</a></li>
+</ul>
+</li>
+<li><a href="#_19">十八、差异化加分点总结</a><ul>
+<li><a href="#181">18.1 五大差异化卖点</a></li>
+<li><a href="#182">18.2 一句话总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</aside>
+
+<header class="header">
+  <h1>「天枢」方案深度补充包</h1>
+  <div class="meta">
+    <div><b>命题企业</b>：赛力斯集团 · 设备质量风险 AI 数字员工</div>
+    <div><b>用途</b>：飞书 AI 先锋未来人才大赛 · 团队补充材料（链接格式）</div>
+    <div><b>定位</b>：向命题企业 + 评委展示开题报告 900 字装不下的方案深度与技术细节</div>
+  </div>
+  <div class="badges">
+    <span class="badge">本体论 OWL</span>
+    <span class="badge">Graph RAG</span>
+    <span class="badge">Autonomous Agent</span>
+    <span class="badge">飞书 Aily</span>
+    <span class="badge">数字孪生</span>
+    <span class="badge">20 模块 · 约 8000 字</span>
+  </div>
+</header>
+
+<main class="content">
+<h1 id="ai">「天枢」方案深度补充包 · 赛力斯 AI 数字员工命题</h1>
+<blockquote>
+<p><strong>用途</strong>：飞书 AI 先锋未来人才大赛报名表「团队补充材料（链接格式）」字段提交<br />
+<strong>托管建议</strong>：粘贴至飞书文档（原生支持 Markdown）→ 设置"互联网可访问"→ 复制公开链接填入报名表<br />
+<strong>目标</strong>：向赛力斯命题企业 + 评委展示开题报告 900 字装不下的方案深度、技术细节、调研扎实度</p>
+</blockquote>
+<hr />
+<h2 id="_1">目录</h2>
+<ol>
+<li><a href="#一方案总览与设计哲学">方案总览与设计哲学</a></li>
+<li><a href="#二四层闭环架构详解">四层闭环架构详解</a></li>
+<li><a href="#三本体论建模完整方案">本体论建模完整方案</a></li>
+<li><a href="#四graph-rag-引擎深度设计">Graph RAG 引擎深度设计</a></li>
+<li><a href="#五多智能体协同机制">多智能体协同机制</a></li>
+<li><a href="#六飞书-ai-能力集成方案">飞书 AI 能力集成方案</a></li>
+<li><a href="#七异常检测与边缘计算">异常检测与边缘计算</a></li>
+<li><a href="#八数字孪生联动与执行闭环">数字孪生联动与执行闭环</a></li>
+<li><a href="#九知识图谱持续进化机制">知识图谱持续进化机制</a></li>
+<li><a href="#十数据安全与合规设计">数据安全与合规设计</a></li>
+<li><a href="#十一竞品对比深度矩阵">竞品对比深度矩阵</a></li>
+<li><a href="#十二用户痛点-技术能力映射">用户痛点-技术能力映射</a></li>
+<li><a href="#十三poc-实施路径与里程碑">POC 实施路径与里程碑</a></li>
+<li><a href="#十四技术选型对比论证">技术选型对比论证</a></li>
+<li><a href="#十五kpi-仪表盘与量化指标">KPI 仪表盘与量化指标</a></li>
+<li><a href="#十六风险与降级策略">风险与降级策略</a></li>
+<li><a href="#十七参考资料清单">参考资料清单</a></li>
+<li><a href="#十八差异化加分点总结">差异化加分点总结</a></li>
+</ol>
+<hr />
+<h2 id="_2">一、方案总览与设计哲学</h2>
+<h3 id="11">1.1 一句话定义</h3>
+<p><strong>「天枢」</strong> = 一个具备<strong>自主感知、自主推理、自主决策、自主执行、自主进化</strong>能力的设备质量风险管控 AI 数字员工，以"设备状态→质量风险"因果推理为核心，构建"感知—认知—交互—执行—进化"五层闭环。</p>
+<h3 id="12">1.2 设计哲学：三个范式跃迁</h3>
+<table>
+<thead>
+<tr>
+<th>范式</th>
+<th>传统工业 AI</th>
+<th>赛力斯命题要求</th>
+<th>「天枢」实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>交互范式</strong></td>
+<td>被动问答（人问 AI 答）</td>
+<td>主动管控</td>
+<td>Agent 7×24 自主监控触发</td>
+</tr>
+<tr>
+<td><strong>推理范式</strong></td>
+<td>向量 RAG 语义检索</td>
+<td>逻辑推理</td>
+<td>本体论 SWRL 规则 + Graph RAG</td>
+</tr>
+<tr>
+<td><strong>行动范式</strong></td>
+<td>输出报告人工处置</td>
+<td>自主决策闭环</td>
+<td>ReAct Agent 自主编排工具链</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13">1.3 为什么叫「天枢」</h3>
+<p>天枢是北斗七星第一颗，古代导航基准星。寓意：在赛力斯"AI 定义汽车"转型中，AI 数字员工成为质量管控的<strong>导航基准</strong>——指引产线在设备退化演变为质量事故前，提前规避风险。</p>
+<h3 id="14">1.4 系统总览图</h3>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────────┐
+│                    「天枢」AI 数字员工 · 五层闭环架构                    │
+└─────────────────────────────────────────────────────────────────────────┘
+
+   ┌──────────┐   ┌───────────────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
+   │ ① 感知层 │ → │ ② 认知层(核心)    │ → │ ③ 交互层 │ → │ ④ 执行层 │ → │ ⑤ 进化层 │
+   │ Perceive │   │ Cognize           │   │ Interact │   │ Execute  │   │ Evolve   │
+   └──────────┘   └───────────────────┘   └──────────┘   └──────────┘   └──────────┘
+        │                  │                    │              │             │
+        ▼                  ▼                    ▼              ▼             ▼
+   多源传感器矩阵    ┌─────────────────┐   飞书 Aily Bot    数字孪生验证    处置结果反哺
+   - 振动(压铸机)    │ ① 本体论 KG(OWL)│   主动推送预警    ↓               ↓
+   - 温度(焊装)      │ ② Graph RAG引擎 │   自然语言问答    联动 MES        知识图谱自更新
+   - 电流谐波(电机)  │ ③ 多Agent协同   │   &quot;AI老师傅&quot;      PLC 降速/停机   模型持续迭代
+   - 声发射(装配)    │   (ReAct框架)   │   AR辅助维修      多维表格工单    &quot;调一次学一次&quot;
+   - 视觉(质检)      │ ④ 因果推理模型  │                  超时自动升级
+   边缘网关毫秒级    └─────────────────┘
+   异常检测                     │
+                                ▼
+                    异常→根因→证据链→方案
+                    (可解释、可追溯)
+</code></pre></div>
+
+<hr />
+<h2 id="_3">二、四层闭环架构详解</h2>
+<h3 id="21-perception">2.1 感知层（Perception）</h3>
+<p><strong>目标</strong>：毫秒级捕获设备状态异常，不漏报不误报。</p>
+<p><strong>关键设备与传感器部署</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>产线</th>
+<th>关键设备</th>
+<th>传感器矩阵</th>
+<th>采样频率</th>
+<th>异常指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CTP 电池产线</strong></td>
+<td>模组堆叠机、激光焊接机</td>
+<td>振动加速度计(三轴)、温度热电偶、电流霍尔、视觉相机</td>
+<td>振动 10kHz / 温度 1Hz / 视觉 30fps</td>
+<td>堆叠精度偏差、焊点气孔率、温度梯度异常</td>
+</tr>
+<tr>
+<td><strong>一体化压铸单元</strong></td>
+<td>9000T 压铸机</td>
+<td>压力传感器、位移传感器、模具温度矩阵、声发射</td>
+<td>压力 1kHz / 位移 100Hz / 声发射 100kHz</td>
+<td>压射压力波动、凝固收缩裂纹、气孔</td>
+</tr>
+<tr>
+<td><strong>焊装车间</strong></td>
+<td>点焊机器人(3000台)</td>
+<td>焊接电流、电极压力、电极磨损、红外温度</td>
+<td>电流 10kHz / 压力 1kHz</td>
+<td>焊核直径、虚焊、飞溅</td>
+</tr>
+<tr>
+<td><strong>涂装车间</strong></td>
+<td>电泳槽、烘干炉</td>
+<td>pH 传感器、电导率、温度梯度、膜厚测厚</td>
+<td>1Hz</td>
+<td>膜厚不均、流挂、桔皮</td>
+</tr>
+<tr>
+<td><strong>总装车间</strong></td>
+<td>扭矩枪、AGV</td>
+<td>扭矩传感器、角度编码器、视觉定位</td>
+<td>100Hz</td>
+<td>扭矩偏差、漏拧、错装</td>
+</tr>
+</tbody>
+</table>
+<p><strong>边缘计算网关设计</strong>：</p>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────┐
+│           边缘计算网关(产线侧)                  │
+├─────────────────────────────────────────────────┤
+│  数据采集层                                     │
+│  ├─ OPC UA Client → PLC/SCADA 数据接入          │
+│  ├─ MQTT Broker → IoT 传感器数据接入            │
+│  └─ Modbus TCP → 传统设备协议适配               │
+│                                                 │
+│  实时处理层                                     │
+│  ├─ SPC 控制限检测(西格玛规则)                  │
+│  ├─ 孤立森林异常检测(轻量ML模型)                │
+│  ├─ 时序滑动窗口特征提取                        │
+│  └─ 异常事件触发(&lt; 100ms 延迟)                  │
+│                                                 │
+│  上行通信层                                     │
+│  ├─ 异常事件 → Kafka → 认知层 Agent             │
+│  ├─ 原始数据 → InfluxDB 时序库(1s 粒度)         │
+│  └─ 5G 园区网回传(赛力斯已部署)                 │
+└─────────────────────────────────────────────────┘
+</code></pre></div>
+
+<p><strong>为什么边缘 + 云端双层</strong>：<br />
+- 边缘侧：毫秒级响应，防止设备故障扩大（如压铸机压力异常 → 100ms 内降速）<br />
+- 云端侧：深度推理，跨设备跨工艺的因果分析（如焊装参数偏差 → 总装质量风险）</p>
+<h3 id="22-cognition">2.2 认知层（Cognition）—— 核心层</h3>
+<p>认知层是「天枢」的大脑，包含四个子引擎，下一节起逐一详解。</p>
+<h3 id="23-interaction">2.3 交互层（Interaction）</h3>
+<p><strong>飞书 Aily 智能体三态交互模式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>触发条件</th>
+<th>交互形式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主动推送态</strong></td>
+<td>Agent 自主发现风险</td>
+<td>Aily Bot 推送卡片到责任人飞书</td>
+<td>"⚠️ 3号压铸机压力波动超标，预测影响电池壳体气孔率，建议降速10%"</td>
+</tr>
+<tr>
+<td><strong>被动问答态</strong></td>
+<td>工人主动提问</td>
+<td>自然语言问答</td>
+<td>工人："扭矩偏差0.3意味着什么？" → Aily 返回带证据链的解释</td>
+</tr>
+<tr>
+<td><strong>协同决策态</strong></td>
+<td>高风险事件需人工确认</td>
+<td>多维表格工单 + 审批流</td>
+<td>Agent 生成处置方案 → 工程师审批 → 自动执行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-execution">2.4 执行层（Execution）</h3>
+<p><strong>三级行动权限</strong>（工业安全设计）：</p>
+<table>
+<thead>
+<tr>
+<th>风险等级</th>
+<th>Agent 自主权</th>
+<th>人工介入</th>
+<th>执行动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L1 低风险</strong></td>
+<td>全自动</td>
+<td>无需</td>
+<td>记录入库 + Aily 通知</td>
+</tr>
+<tr>
+<td><strong>L2 中风险</strong></td>
+<td>半自动</td>
+<td>工程师确认</td>
+<td>MES 调整排产 + 多维表格工单</td>
+</tr>
+<tr>
+<td><strong>L3 高风险</strong></td>
+<td>仅建议</td>
+<td>必须审批</td>
+<td>数字孪生验证 → PLC 降速/停机</td>
+</tr>
+</tbody>
+</table>
+<p><strong>数字孪生验证机制</strong>（工业安全底线）：<br />
+所有影响生产的执行动作（如 PLC 降速/停机），必须先在数字孪生平台模拟验证：<br />
+1. Agent 生成执行方案<br />
+2. 推送至数字孪生平台，模拟执行后 30 分钟的产线状态<br />
+3. 验证不引发次生风险（如降速是否导致后续工位堆料）<br />
+4. 验证通过 → 自动执行；验证失败 → 升级人工处置</p>
+<h3 id="25-evolution">2.5 进化层（Evolution）</h3>
+<p><strong>"调一次学一次"飞轮</strong>：</p>
+<div class="codehilite"><pre><span></span><code>每次调机/异常处置完成
+       ↓
+  ┌────────────────────────────┐
+  │ 自动入库：                 │
+  │ - 异常描述(自然语言)       │
+  │ - 根因证据链(图结构)       │
+  │ - 最终处置参数(数值)       │
+  │ - 良率结果(量化)           │
+  │ - 工程师反馈(评分)         │
+  └────────────────────────────┘
+       ↓
+  ┌────────────────────────────┐
+  │ 知识图谱自更新：           │
+  │ - 新增案例节点             │
+  │ - 更新因果边权重           │
+  │ - 本体规则修订建议         │
+  └────────────────────────────┘
+       ↓
+  ┌────────────────────────────┐
+  │ 模型持续迭代：             │
+  │ - 推荐模型再训练(周级)     │
+  │ - 异常检测阈值自适应       │
+  │ - Agent 策略优化           │
+  └────────────────────────────┘
+</code></pre></div>
+
+<hr />
+<h2 id="_4">三、本体论建模完整方案</h2>
+<h3 id="31-rag">3.1 为什么必须用本体论（而非纯向量 RAG）</h3>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>向量 RAG</th>
+<th>本体论 + Graph RAG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>语义相似度匹配</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>跨实体关系推理</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>因果链推导</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>公理约束检查</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>推理路径可解释</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>处理未见过的组合</td>
+<td>❌（训练数据无则失败）</td>
+<td>✅（基于规则推理）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>工业场景的硬需求</strong>：当 Agent 说"建议降速 10%"时，工程师必须能追溯完整推理链——"3号压铸机振动频率异常 → 关联本体规则：振动&gt;阈值→压射压力波动→铸件气孔风险→质量指标PQ-007超标概率 78%"。向量 RAG 给不出这种因果链。</p>
+<h3 id="32">3.2 三元本体模型</h3>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+│            赛力斯工厂「设备-工艺-质量」三元本体              │
+└─────────────────────────────────────────────────────────────┘
+
+   ┌──────────────┐         ┌──────────────┐         ┌──────────────┐
+   │  设备本体    │ ──────▶ │  工艺本体    │ ──────▶ │  质量本体    │
+   │  Equipment   │ hasProc │  Process     │ affects │  Quality     │
+   └──────────────┘         └──────────────┘         └──────────────┘
+         │                        │                        │
+         ▼                        ▼                        ▼
+   - 设备类型                 - 工序类型                 - 质量指标
+   - 设备型号                 - 工艺参数                 - 标准范围
+   - 关键部件                 - 参数标准                 - 缺陷类型
+   - 退化模型                 - SPC控制限                - 检测方法
+   - 维保周期                 - 依赖关系                 - 责任工序
+</code></pre></div>
+
+<h3 id="33-owl">3.3 完整 OWL 本体定义（核心片段）</h3>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- ============================================================</span>
+<span class="cm">     赛力斯工厂设备-工艺-质量本体（OWL/Turtle 格式）</span>
+<span class="cm">     工具：Protégé 编辑 + Pellet 推理机</span>
+<span class="cm">     ============================================================ --&gt;</span>
+
+@prefix<span class="w"> </span>:<span class="w"> </span><span class="nt">&lt;http:</span><span class="err">//seres.com/ontology/manufacturing#</span><span class="nt">&gt;</span><span class="w"> </span>.
+@prefix<span class="w"> </span>owl:<span class="w"> </span><span class="nt">&lt;http:</span><span class="err">//www.w3.org/2002/07/owl#</span><span class="nt">&gt;</span><span class="w"> </span>.
+@prefix<span class="w"> </span>rdfs:<span class="w"> </span><span class="nt">&lt;http:</span><span class="err">//www.w3.org/2000/01/rdf-schema#</span><span class="nt">&gt;</span><span class="w"> </span>.
+@prefix<span class="w"> </span>swrl:<span class="w"> </span><span class="nt">&lt;http:</span><span class="err">//www.w3.org/2003/11/swrl#</span><span class="nt">&gt;</span><span class="w"> </span>.
+
+#<span class="w"> </span>==========<span class="w"> </span>设备本体<span class="w"> </span>==========
+:Equipment<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;
+<span class="w">    </span>rdfs:subClassOf<span class="w"> </span>[
+<span class="w">        </span>a<span class="w"> </span>owl:Restriction<span class="w"> </span>;
+<span class="w">        </span>owl:onProperty<span class="w"> </span>:hasComponent<span class="w"> </span>;
+<span class="w">        </span>owl:someValuesFrom<span class="w"> </span>:Component
+<span class="w">    </span>]<span class="w"> </span>.
+
+:CastingMachine<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;
+<span class="w">    </span>rdfs:subClassOf<span class="w"> </span>:Equipment<span class="w"> </span>.
+
+:WeldingRobot<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;
+<span class="w">    </span>rdfs:subClassOf<span class="w"> </span>:Equipment<span class="w"> </span>.
+
+:Component<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>.
+:HydraulicCylinder<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:Component<span class="w"> </span>.
+:Electrode<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:Component<span class="w"> </span>.
+
+#<span class="w"> </span>设备退化等级枚举
+:DegradationLevel<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;
+<span class="w">    </span>owl:oneOf<span class="w"> </span>(:Healthy<span class="w"> </span>:Warning<span class="w"> </span>:Critical<span class="w"> </span>:Failed)<span class="w"> </span>.
+
+#<span class="w"> </span>==========<span class="w"> </span>工艺本体<span class="w"> </span>==========
+:Process<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;
+<span class="w">    </span>rdfs:subClassOf<span class="w"> </span>[
+<span class="w">        </span>a<span class="w"> </span>owl:Restriction<span class="w"> </span>;
+<span class="w">        </span>owl:onProperty<span class="w"> </span>:hasParameter<span class="w"> </span>;
+<span class="w">        </span>owl:someValuesFrom<span class="w"> </span>:ProcessParameter
+<span class="w">    </span>]<span class="w"> </span>.
+
+:DieCasting<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:Process<span class="w"> </span>.
+:SpotWelding<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:Process<span class="w"> </span>.
+
+:ProcessParameter<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>.
+:CastingPressure<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:ProcessParameter<span class="w"> </span>.
+:WeldingCurrent<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:ProcessParameter<span class="w"> </span>.
+
+#<span class="w"> </span>==========<span class="w"> </span>质量本体<span class="w"> </span>==========
+:QualityIndicator<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>.
+:Porosity<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:QualityIndicator<span class="w"> </span>.
+:Weld<span class="w"> </span>Nugget<span class="w"> </span>Diameter<span class="w"> </span>a<span class="w"> </span>owl:Class<span class="w"> </span>;<span class="w"> </span>rdfs:subClassOf<span class="w"> </span>:QualityIndicator<span class="w"> </span>.
+
+#<span class="w"> </span>==========<span class="w"> </span>关系属性<span class="w"> </span>==========
+:hasProcess<span class="w"> </span>a<span class="w"> </span>owl:ObjectProperty<span class="w"> </span>;
+<span class="w">    </span>rdfs:domain<span class="w"> </span>:Equipment<span class="w"> </span>;
+<span class="w">    </span>rdfs:range<span class="w"> </span>:Process<span class="w"> </span>.
+
+:affectsQuality<span class="w"> </span>a<span class="w"> </span>owl:ObjectProperty<span class="w"> </span>;
+<span class="w">    </span>rdfs:domain<span class="w"> </span>:Process<span class="w"> </span>;
+<span class="w">    </span>rdfs:range<span class="w"> </span>:QualityIndicator<span class="w"> </span>;
+<span class="w">    </span>owl:inverseOf<span class="w"> </span>:affectedBy<span class="w"> </span>.
+
+:hasDegradationLevel<span class="w"> </span>a<span class="w"> </span>owl:DatatypeProperty<span class="w"> </span>;
+<span class="w">    </span>rdfs:domain<span class="w"> </span>:Equipment<span class="w"> </span>;
+<span class="w">    </span>rdfs:range<span class="w"> </span>xsd:string<span class="w"> </span>.
+
+#<span class="w"> </span>==========<span class="w"> </span>SWRL<span class="w"> </span>推理规则<span class="w"> </span>==========
+
+#<span class="w"> </span>规则1：设备退化<span class="w"> </span>→<span class="w"> </span>工艺参数漂移风险
+[<span class="w"> </span>a<span class="w"> </span>swrl:Imp<span class="w"> </span>;
+<span class="w">  </span>swrl:body<span class="w"> </span>(
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:ClassAtom<span class="w"> </span>;<span class="w"> </span>swrl:classPredicate<span class="w"> </span>:Equipment<span class="w"> </span>;<span class="w"> </span>swrl:argument1<span class="w"> </span>?e<span class="w"> </span>]
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:DatavalPropertyAtom<span class="w"> </span>;<span class="w"> </span>swrl:propertyPredicate<span class="w"> </span>:hasDegradationLevel<span class="w"> </span>;
+<span class="w">      </span>swrl:argument1<span class="w"> </span>?e<span class="w"> </span>;<span class="w"> </span>swrl:argument2<span class="w"> </span>&quot;Warning&quot;<span class="w"> </span>]
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:ObjectPropertyAtom<span class="w"> </span>;<span class="w"> </span>swrl:propertyPredicate<span class="w"> </span>:hasProcess<span class="w"> </span>;
+<span class="w">      </span>swrl:argument1<span class="w"> </span>?e<span class="w"> </span>;<span class="w"> </span>swrl:argument2<span class="w"> </span>?p<span class="w"> </span>]
+<span class="w">  </span>)<span class="w"> </span>;
+<span class="w">  </span>swrl:head<span class="w"> </span>(
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:BuiltinAtom<span class="w"> </span>;<span class="w"> </span>swrl:builtin<span class="w"> </span>swrlb:concat<span class="w"> </span>;
+<span class="w">      </span>swrl:arguments<span class="w"> </span>(&quot;参数漂移风险&quot;<span class="w"> </span>?p)<span class="w"> </span>]
+<span class="w">  </span>)
+]<span class="w"> </span>.
+
+#<span class="w"> </span>规则2：工艺参数漂移<span class="w"> </span>→<span class="w"> </span>质量风险预警
+[<span class="w"> </span>a<span class="w"> </span>swrl:Imp<span class="w"> </span>;
+<span class="w">  </span>swrl:body<span class="w"> </span>(
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:ObjectPropertyAtom<span class="w"> </span>;<span class="w"> </span>swrl:propertyPredicate<span class="w"> </span>:affectsQuality<span class="w"> </span>;
+<span class="w">      </span>swrl:argument1<span class="w"> </span>?p<span class="w"> </span>;<span class="w"> </span>swrl:argument2<span class="w"> </span>?q<span class="w"> </span>]
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:BuiltinAtom<span class="w"> </span>;<span class="w"> </span>swrl:builtin<span class="w"> </span>:parameterDrift<span class="w"> </span>;
+<span class="w">      </span>swrl:arguments<span class="w"> </span>(?p<span class="w"> </span>?drift)<span class="w"> </span>]
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:BuiltinAtom<span class="w"> </span>;<span class="w"> </span>swrl:builtin<span class="w"> </span>swrlb:greaterThan<span class="w"> </span>;
+<span class="w">      </span>swrl:arguments<span class="w"> </span>(?drift<span class="w"> </span>0.05)<span class="w"> </span>]
+<span class="w">  </span>)<span class="w"> </span>;
+<span class="w">  </span>swrl:head<span class="w"> </span>(
+<span class="w">    </span>[<span class="w"> </span>a<span class="w"> </span>swrl:ClassAtom<span class="w"> </span>;<span class="w"> </span>swrl:classPredicate<span class="w"> </span>:QualityRisk<span class="w"> </span>;<span class="w"> </span>swrl:argument1<span class="w"> </span>?q<span class="w"> </span>]
+<span class="w">  </span>)
+]<span class="w"> </span>.
+</code></pre></div>
+
+<h3 id="34">3.4 本体论实例化（赛力斯真实设备）</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># 3号压铸机实例</span>
+<span class="p">:</span><span class="nt">Equip_LK9000T_003</span> <span class="kt">a</span> <span class="p">:</span><span class="nt">CastingMachine</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">model</span> <span class="s">&quot;力劲 9000T 一体化压铸机&quot;</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">location</span> <span class="s">&quot;赛力斯超级工厂 A区&quot;</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">hasComponent</span> <span class="p">:</span><span class="nt">HydraulicCylinder_003A</span><span class="p">,</span> <span class="p">:</span><span class="nt">Furnace_003B</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">hasProcess</span> <span class="p">:</span><span class="nt">Proc_DieCasting_003</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">hasDegradationLevel</span> <span class="s">&quot;Warning&quot;</span> <span class="p">;</span>  <span class="c"># 当前退化等级</span>
+    <span class="p">:</span><span class="nt">lastMaintenance</span> <span class="s">&quot;2026-06-15&quot;</span> <span class="p">.</span>
+
+<span class="c"># 3号压铸机的压铸工艺</span>
+<span class="p">:</span><span class="nt">Proc_DieCasting_003</span> <span class="kt">a</span> <span class="p">:</span><span class="nt">DieCasting</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">hasParameter</span> <span class="p">:</span><span class="nt">Param_Pressure_003</span><span class="p">,</span> <span class="p">:</span><span class="nt">Param_Speed_003</span><span class="p">,</span> <span class="p">:</span><span class="nt">Param_Temp_003</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">affectsQuality</span> <span class="p">:</span><span class="nt">QI_Porosity</span><span class="p">,</span> <span class="p">:</span><span class="nt">QI_Shrinkage</span> <span class="p">.</span>
+
+<span class="c"># 质量指标实例</span>
+<span class="p">:</span><span class="nt">QI_Porosity</span> <span class="kt">a</span> <span class="p">:</span><span class="nt">Porosity</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">standardRange</span> <span class="s">&quot;≤ 0.5%&quot;</span> <span class="p">;</span>
+    <span class="p">:</span><span class="nt">currentValue</span> <span class="s">&quot;0.8%&quot;</span> <span class="p">;</span>  <span class="c"># 超标</span>
+    <span class="p">:</span><span class="nt">detectionMethod</span> <span class="s">&quot;X光检测&quot;</span> <span class="p">.</span>
+</code></pre></div>
+
+<p><strong>推理示例</strong>：当推理机加载上述实例后，自动触发规则1+规则2，输出：<br />
+- <code>:Equip_LK9000T_003</code> 退化等级 Warning → <code>:Proc_DieCasting_003</code> 参数漂移风险<br />
+- <code>:Proc_DieCasting_003</code> 影响 <code>:QI_Porosity</code> → <code>:QI_Porosity</code> 质量风险预警<br />
+- 证据链：设备退化 → 工艺漂移 → 质量风险（可追溯完整路径）</p>
+<hr />
+<h2 id="graph-rag">四、Graph RAG 引擎深度设计</h2>
+<h3 id="41-graph-rag-vs-rag">4.1 Graph RAG vs 传统向量 RAG</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>向量 RAG</th>
+<th>Graph RAG</th>
+<th>「天枢」混合策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>检索单元</td>
+<td>文本块</td>
+<td>图节点+边</td>
+<td>子图</td>
+</tr>
+<tr>
+<td>检索方式</td>
+<td>语义相似度</td>
+<td>图遍历+语义</td>
+<td>本体推理缩范围 + Graph RAG 深检</td>
+</tr>
+<tr>
+<td>跨实体推理</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>弱（相似度黑盒）</td>
+<td>强（路径可追溯）</td>
+<td>强（证据链可视化）</td>
+</tr>
+<tr>
+<td>召回率</td>
+<td>高</td>
+<td>中</td>
+<td>高（混合互补）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2 三阶段检索流程</h3>
+<div class="codehilite"><pre><span></span><code>异常信号输入
+     ↓
+┌─────────────────────────────────────────────┐
+│ Stage 1: 本体推理缩范围                     │
+│ - Pellet 推理机加载 SWRL 规则               │
+│ - 输出候选根因集合(通常 3-5 个)             │
+│ - 示例：压力波动异常 → 候选根因             │
+│   {液压缸退化, 模具温度异常, 压射速度漂移}  │
+└─────────────────────────────────────────────┘
+     ↓
+┌─────────────────────────────────────────────┐
+│ Stage 2: Graph RAG 深度检索                 │
+│ - 对每个候选根因, 在 Neo4j 中遍历邻域子图   │
+│ - 遍历深度: 3 跳                            │
+│ - 边过滤: affects/causes/correlates/mitigates│
+│ - 输出: 子图(节点+边+历史案例)              │
+└─────────────────────────────────────────────┘
+     ↓
+┌─────────────────────────────────────────────┐
+│ Stage 3: LLM 生成可解释证据链               │
+│ - Prompt: &quot;基于以下子图, 生成根因分析报告&quot;  │
+│ - 输出:                                     │
+│   根因: 液压缸退化(置信度 78%)              │
+│   证据链:                                   │
+│     振动频率 120Hz(正常 80Hz)               │
+│     → 液压缸磨损(本体规则: 振动&gt;100Hz)      │
+│     → 压射压力波动 ±5%(SPC 超限)            │
+│     → 气孔率 0.8%(标准 ≤0.5%)               │
+│   处置建议: 更换液压缸密封件(参考案例 #234) │
+└─────────────────────────────────────────────┘
+</code></pre></div>
+
+<h3 id="43-graph-rag">4.3 Graph RAG 核心代码</h3>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">天枢 Graph RAG 引擎</span>
+<span class="sd">技术栈: Neo4j + LlamaIndex GraphRAG + OpenAI Embeddings</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">neo4j</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphDatabase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.graph_stores.neo4j</span><span class="w"> </span><span class="kn">import</span> <span class="n">Neo4jGraphStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.embeddings.openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbedding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_index.llms.deepseek</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepSeekLLM</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TianshuGraphRAG</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neo4j_uri</span><span class="p">,</span> <span class="n">neo4j_user</span><span class="p">,</span> <span class="n">neo4j_pwd</span><span class="p">):</span>
+        <span class="c1"># 1. 连接知识图谱</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">GraphDatabase</span><span class="o">.</span><span class="n">driver</span><span class="p">(</span>
+            <span class="n">neo4j_uri</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">neo4j_user</span><span class="p">,</span> <span class="n">neo4j_pwd</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># 2. 初始化嵌入模型</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_model</span> <span class="o">=</span> <span class="n">OpenAIEmbedding</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">)</span>
+        <span class="c1"># 3. 初始化 LLM(赛力斯已与 DeepSeek 合作)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">DeepSeekLLM</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;deepseek-v3&quot;</span><span class="p">)</span>
+        <span class="c1"># 4. 加载本体推理机</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoner</span> <span class="o">=</span> <span class="n">OntologyReasoner</span><span class="p">(</span><span class="s2">&quot;seres_ontology.owl&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anomaly_signal</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;三阶段检索&quot;&quot;&quot;</span>
+        <span class="c1"># Stage 1: 本体推理缩范围</span>
+        <span class="n">candidate_causes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reasoner</span><span class="o">.</span><span class="n">infer_causes</span><span class="p">(</span><span class="n">anomaly_signal</span><span class="p">)</span>
+        <span class="c1"># 示例输出: [&quot;液压缸退化&quot;, &quot;模具温度异常&quot;, &quot;压射速度漂移&quot;]</span>
+
+        <span class="c1"># Stage 2: Graph RAG 深度检索</span>
+        <span class="n">subgraphs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cause</span> <span class="ow">in</span> <span class="n">candidate_causes</span><span class="p">:</span>
+                <span class="c1"># Cypher 查询: 3 跳邻域子图</span>
+                <span class="n">cypher</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                MATCH path = (c:Component {name: $cause})-[*1..3]-(related)</span>
+<span class="s2">                WHERE ALL(r IN relationships(path)</span>
+<span class="s2">                          WHERE type(r) IN [&#39;affects&#39;, &#39;causes&#39;,</span>
+<span class="s2">                                            &#39;correlates_with&#39;, &#39;mitigates_by&#39;])</span>
+<span class="s2">                RETURN path, nodes(path) as nodes, relationships(path) as rels</span>
+<span class="s2">                LIMIT 50</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cypher</span><span class="p">,</span> <span class="n">cause</span><span class="o">=</span><span class="n">cause</span><span class="p">)</span>
+                <span class="n">subgraphs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_subgraph</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+        <span class="c1"># Stage 3: LLM 生成证据链</span>
+        <span class="n">evidence_chain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_evidence</span><span class="p">(</span>
+            <span class="n">anomaly_signal</span><span class="p">,</span> <span class="n">candidate_causes</span><span class="p">,</span> <span class="n">subgraphs</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">evidence_chain</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_evidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anomaly</span><span class="p">,</span> <span class="n">causes</span><span class="p">,</span> <span class="n">subgraphs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;LLM 生成可解释证据链&quot;&quot;&quot;</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        你是赛力斯超级工厂的设备质量专家。</span>
+<span class="s2">        异常信号: </span><span class="si">{</span><span class="n">anomaly</span><span class="si">}</span>
+<span class="s2">        候选根因: </span><span class="si">{</span><span class="n">causes</span><span class="si">}</span>
+<span class="s2">        知识图谱子图: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subgraph_to_text</span><span class="p">(</span><span class="n">subgraphs</span><span class="p">)</span><span class="si">}</span>
+
+<span class="s2">        请输出 JSON:</span>
+<span class="s2">        </span><span class="se">{{</span>
+<span class="s2">            &quot;root_cause&quot;: &quot;最可能的根因&quot;,</span>
+<span class="s2">            &quot;confidence&quot;: 0.0-1.0,</span>
+<span class="s2">            &quot;evidence_chain&quot;: [&quot;证据1&quot;, &quot;证据2&quot;, ...],</span>
+<span class="s2">            &quot;affected_quality&quot;: &quot;受影响的质量指标&quot;,</span>
+<span class="s2">            &quot;action_plan&quot;: &quot;处置建议&quot;,</span>
+<span class="s2">            &quot;reference_cases&quot;: [&quot;历史案例ID&quot;]</span>
+<span class="s2">        </span><span class="se">}}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_json</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_subgraph_to_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subgraphs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;将子图序列化为 LLM 可读文本&quot;&quot;&quot;</span>
+        <span class="n">text_parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sg</span> <span class="ow">in</span> <span class="n">subgraphs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sg</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+                <span class="n">text_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;节点: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">sg</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+                <span class="n">text_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;关系: </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="si">}</span><span class="s2"> -[</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">]-&gt; </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_parts</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="44">4.4 性能指标设计</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>目标值</th>
+<th>测量方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>根因定位准确率</td>
+<td>≥ 85%</td>
+<td>人工标注对比</td>
+</tr>
+<tr>
+<td>证据链完整度</td>
+<td>≥ 90%</td>
+<td>关键推理步骤覆盖率</td>
+</tr>
+<tr>
+<td>检索延迟(P95)</td>
+<td>&lt; 3 秒</td>
+<td>端到端测量</td>
+</tr>
+<tr>
+<td>召回率</td>
+<td>≥ 90%</td>
+<td>真实根因在候选集内</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">五、多智能体协同机制</h2>
+<h3 id="51-agent">5.1 三 Agent 协同架构</h3>
+<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+│                 「天枢」多智能体协同架构                      │
+└──────────────────────────────────────────────────────────────┘
+
+   异常信号
+       ↓
+┌──────────────┐
+│ 设备健康Agent│ ── 职责: 设备退化诊断
+│ DeviceHealth │     工具: 振动分析、温度趋势、维保历史查询
+└──────┬───────┘
+       │ 输出: 设备健康度评分 + 退化根因
+       ↓
+┌──────────────┐
+│ 质量风险Agent│ ── 职责: 质量影响预判
+│ QualityRisk  │     工具: 工艺参数追溯、质量历史查询、SPC分析
+└──────┬───────┘
+       │ 输出: 质量风险等级 + 受影响指标
+       ↓
+┌──────────────┐
+│ 决策Agent    │ ── 职责: 综合决策与执行编排
+│ Decision     │     工具: 数字孪生验证、MES联动、飞书Aily推送
+└──────────────┘
+       │ 输出: 处置方案 + 执行指令
+       ↓
+   执行层动作
+</code></pre></div>
+
+<h3 id="52-react">5.2 ReAct 框架实现</h3>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">天枢多智能体 ReAct 实现</span>
+<span class="sd">框架: LangGraph</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">END</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">anomaly</span><span class="p">:</span> <span class="n">Dict</span>                    <span class="c1"># 异常信号</span>
+    <span class="n">device_health</span><span class="p">:</span> <span class="n">Dict</span>              <span class="c1"># 设备健康Agent输出</span>
+    <span class="n">quality_risk</span><span class="p">:</span> <span class="n">Dict</span>               <span class="c1"># 质量风险Agent输出</span>
+    <span class="n">decision</span><span class="p">:</span> <span class="n">Dict</span>                   <span class="c1"># 决策Agent输出</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>              <span class="c1"># 协同消息记录</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceHealthAgent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;设备健康Agent: 诊断设备退化根因&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">,</span> <span class="n">tools</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">tools</span>  <span class="c1"># 振动分析、温度趋势、维保历史</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentState</span><span class="p">:</span>
+        <span class="c1"># ReAct: Reason + Act 循环</span>
+        <span class="n">thought</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;异常: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;anomaly&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;思考: 需要诊断设备退化根因&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># 调用工具</span>
+        <span class="n">vibration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;vibration_analyzer&quot;</span><span class="p">](</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;anomaly&quot;</span><span class="p">][</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">maintenance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;maintenance_history&quot;</span><span class="p">](</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;anomaly&quot;</span><span class="p">][</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="c1"># 推理根因</span>
+        <span class="n">diagnosis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;振动数据: </span><span class="si">{</span><span class="n">vibration</span><span class="si">}</span><span class="se">\n</span><span class="s2">维保历史: </span><span class="si">{</span><span class="n">maintenance</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;输出设备健康度评分(0-1)和退化根因&quot;</span>
+        <span class="p">)</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;device_health&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">diagnosis</span><span class="p">)</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;[DeviceHealthAgent] </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;device_health&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">QualityRiskAgent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;质量风险Agent: 预判质量影响&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentState</span><span class="p">:</span>
+        <span class="c1"># 基于设备退化, 预判质量风险</span>
+        <span class="n">risk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_rag</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+            <span class="n">anomaly</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;anomaly&quot;</span><span class="p">],</span>
+            <span class="n">device_health</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;device_health&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;quality_risk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;[QualityRiskAgent] </span><span class="si">{</span><span class="n">risk</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DecisionAgent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;决策Agent: 综合决策与执行编排&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">AgentState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentState</span><span class="p">:</span>
+        <span class="c1"># 综合设备健康 + 质量风险, 生成处置方案</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;设备健康: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;device_health&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;质量风险: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;quality_risk&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;输出处置方案(风险等级/执行动作/责任人)&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># 数字孪生验证(高风险必须)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_risk_level</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;L3&quot;</span><span class="p">:</span>
+            <span class="n">simulation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;digital_twin&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">simulation</span><span class="p">[</span><span class="s2">&quot;safe&quot;</span><span class="p">]:</span>
+                <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fallback_plan</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+        <span class="c1"># 飞书Aily推送</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;feishu_aily&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">push</span><span class="p">(</span>
+            <span class="n">to</span><span class="o">=</span><span class="n">plan</span><span class="p">[</span><span class="s2">&quot;responsible&quot;</span><span class="p">],</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">plan</span>
+        <span class="p">)</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;decision&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plan</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+<span class="c1"># 构建 LangGraph 工作流</span>
+<span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">AgentState</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;device_health&quot;</span><span class="p">,</span> <span class="n">DeviceHealthAgent</span><span class="p">())</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;quality_risk&quot;</span><span class="p">,</span> <span class="n">QualityRiskAgent</span><span class="p">())</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;decision&quot;</span><span class="p">,</span> <span class="n">DecisionAgent</span><span class="p">())</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;device_health&quot;</span><span class="p">,</span> <span class="s2">&quot;quality_risk&quot;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;quality_risk&quot;</span><span class="p">,</span> <span class="s2">&quot;decision&quot;</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;decision&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+<span class="n">workflow</span><span class="o">.</span><span class="n">set_entry_point</span><span class="p">(</span><span class="s2">&quot;device_health&quot;</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="53-agent">5.3 Agent 工具链清单</h3>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>工具</th>
+<th>用途</th>
+<th>数据源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeviceHealth</td>
+<td>vibration_analyzer</td>
+<td>振动频谱分析</td>
+<td>InfluxDB 时序库</td>
+</tr>
+<tr>
+<td>DeviceHealth</td>
+<td>maintenance_history</td>
+<td>维保记录查询</td>
+<td>MES 系统</td>
+</tr>
+<tr>
+<td>DeviceHealth</td>
+<td>degradation_model</td>
+<td>退化趋势预测</td>
+<td>ML 模型服务</td>
+</tr>
+<tr>
+<td>QualityRisk</td>
+<td>graph_rag</td>
+<td>知识图谱检索</td>
+<td>Neo4j</td>
+</tr>
+<tr>
+<td>QualityRisk</td>
+<td>spc_analyzer</td>
+<td>SPC 控制限分析</td>
+<td>InfluxDB</td>
+</tr>
+<tr>
+<td>QualityRisk</td>
+<td>quality_history</td>
+<td>质量指标历史</td>
+<td>"一车一档"系统</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td>digital_twin</td>
+<td>数字孪生验证</td>
+<td>赛力斯数字孪生平台</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td>mes_controller</td>
+<td>MES 排产调整</td>
+<td>MES API</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td>feishu_aily</td>
+<td>飞书推送</td>
+<td>飞书开放平台 API</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ai_1">六、飞书 AI 能力集成方案</h2>
+<h3 id="61-ai">6.1 飞书 AI 能力使用清单（命中命题硬性要求）</h3>
+<table>
+<thead>
+<tr>
+<th>飞书能力</th>
+<th>在「天枢」中的应用</th>
+<th>创新点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>飞书 Aily 智能体</strong></td>
+<td>产线"虚拟质量工程师"，三态交互</td>
+<td>非典型工业应用</td>
+</tr>
+<tr>
+<td><strong>飞书多维表格</strong></td>
+<td>质量工单流转 + KPI 仪表盘</td>
+<td>替代传统 MES 工单系统</td>
+</tr>
+<tr>
+<td><strong>飞书知识问答</strong></td>
+<td>"AI 老师傅"经验问答</td>
+<td>老师傅经验数字化</td>
+</tr>
+<tr>
+<td><strong>飞书开放平台 API</strong></td>
+<td>Agent 调用飞书消息推送</td>
+<td>端到端闭环</td>
+</tr>
+<tr>
+<td><strong>飞书文档</strong></td>
+<td>处置报告自动生成归档</td>
+<td>知识沉淀载体</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 飞书多维表格工单设计</h3>
+<p><strong>表1：质量风险工单表</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工单ID</td>
+<td>自动编号</td>
+<td>QR-YYYYMMDD-XXX</td>
+</tr>
+<tr>
+<td>触发时间</td>
+<td>日期时间</td>
+<td>Agent 自主触发时间</td>
+</tr>
+<tr>
+<td>设备ID</td>
+<td>单选</td>
+<td>关联设备本体实例</td>
+</tr>
+<tr>
+<td>异常类型</td>
+<td>单选</td>
+<td>振动超标/温度异常/参数漂移</td>
+</tr>
+<tr>
+<td>风险等级</td>
+<td>单选</td>
+<td>L1/L2/L3</td>
+</tr>
+<tr>
+<td>根因证据链</td>
+<td>多行文本</td>
+<td>Agent 输出的可解释链路</td>
+</tr>
+<tr>
+<td>处置方案</td>
+<td>多行文本</td>
+<td>Agent 建议</td>
+</tr>
+<tr>
+<td>责任工程师</td>
+<td>人员</td>
+<td>自动指派</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>单选</td>
+<td>待处理/处理中/已验证/已关闭</td>
+</tr>
+<tr>
+<td>闭环时长</td>
+<td>公式</td>
+<td>验证时间-触发时间</td>
+</tr>
+<tr>
+<td>处置结果</td>
+<td>多行文本</td>
+<td>工程师反馈</td>
+</tr>
+<tr>
+<td>反哺知识库</td>
+<td>复选框</td>
+<td>是否已入库</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表2：设备健康度看板</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设备ID</td>
+<td>单选</td>
+<td>-</td>
+</tr>
+<tr>
+<td>健康度评分</td>
+<td>数字</td>
+<td>0-1，Agent 实时计算</td>
+</tr>
+<tr>
+<td>退化趋势</td>
+<td>公式</td>
+<td>7日滑动趋势</td>
+</tr>
+<tr>
+<td>最近异常</td>
+<td>关联</td>
+<td>关联工单表</td>
+</tr>
+<tr>
+<td>下次维保预测</td>
+<td>日期</td>
+<td>基于退化模型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-aily-bot">6.3 飞书 Aily Bot 配置</h3>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">飞书 Aily 智能体配置(伪代码)</span>
+<span class="sd">通过飞书开放平台创建自定义机器人</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lark_oapi</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lark</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lark_oapi.api.im.v1</span><span class="w"> </span><span class="kn">import</span> <span class="n">CreateMessageRequest</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TianshuAilyBot</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">app_secret</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">lark</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">builder</span><span class="p">()</span> \
+            <span class="o">.</span><span class="n">app_id</span><span class="p">(</span><span class="n">app_id</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">app_secret</span><span class="p">(</span><span class="n">app_secret</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">push_risk_alert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_user_id</span><span class="p">,</span> <span class="n">risk_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;主动推送风险预警卡片&quot;&quot;&quot;</span>
+        <span class="n">card</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;wide_screen_mode&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;plain_text&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;⚠️ </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">级风险预警&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span> <span class="k">if</span> <span class="n">risk_data</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;L3&quot;</span> <span class="k">else</span> <span class="s2">&quot;orange&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;elements&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;lark_md&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;**设备**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;device_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;**异常**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;anomaly&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;**根因**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;root_cause&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;**置信度**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">%</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;**影响质量**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;quality_impact&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}},</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;lark_md&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;**证据链**:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span>
+                                     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;evidence_chain&#39;</span><span class="p">])}},</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;lark_md&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;**建议处置**: </span><span class="si">{</span><span class="n">risk_data</span><span class="p">[</span><span class="s1">&#39;action_plan&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}},</span>
+                <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;action&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
+                     <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;button&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;plain_text&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;✅ 采纳执行&quot;</span><span class="p">},</span>
+                      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;primary&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;approve&quot;</span><span class="p">,</span> <span class="s2">&quot;ticket_id&quot;</span><span class="p">:</span> <span class="n">risk_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]}},</span>
+                     <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;button&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;plain_text&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;❌ 驳回&quot;</span><span class="p">},</span>
+                      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;danger&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;reject&quot;</span><span class="p">,</span> <span class="s2">&quot;ticket_id&quot;</span><span class="p">:</span> <span class="n">risk_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]}}</span>
+                 <span class="p">]}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">CreateMessageRequest</span><span class="p">()</span> \
+            <span class="o">.</span><span class="n">receive_id_type</span><span class="p">(</span><span class="s2">&quot;open_id&quot;</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">request_body</span><span class="p">(</span>
+                <span class="n">CreateMessageRequestBody</span><span class="o">.</span><span class="n">builder</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">receive_id</span><span class="p">(</span><span class="n">to_user_id</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">msg_type</span><span class="p">(</span><span class="s2">&quot;interactive&quot;</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">card</span><span class="p">))</span>
+                <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="_6">七、异常检测与边缘计算</h2>
+<h3 id="71">7.1 三级异常检测策略</h3>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>方法</th>
+<th>延迟</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 实时</td>
+<td>SPC 控制限(3σ规则)</td>
+<td>&lt; 50ms</td>
+<td>已知异常模式快速触发</td>
+</tr>
+<tr>
+<td>L2 近实时</td>
+<td>孤立森林轻量ML</td>
+<td>&lt; 500ms</td>
+<td>未知异常模式发现</td>
+</tr>
+<tr>
+<td>L3 深度</td>
+<td>LSTM 时序预测 + Graph RAG</td>
+<td>&lt; 5s</td>
+<td>复杂根因推理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-spc">7.2 SPC 控制限设计示例</h3>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SPC 控制限检测 - 压铸机压力参数</span>
+<span class="sd">基于历史数据计算控制限, 实时检测异常</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SPCMonitor</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historical_data</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="n">param_name</span>
+        <span class="c1"># 基于历史数据计算控制限</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">historical_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">historical_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ucl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span>  <span class="c1"># 上控制限</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lcl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span>  <span class="c1"># 下控制限</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uwl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span>  <span class="c1"># 上警告限</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lwl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">std</span>  <span class="c1"># 下警告限</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回异常等级&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ucl</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lcl</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;CRITICAL&quot;</span>  <span class="c1"># 超控制限, 立即触发</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">uwl</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lwl</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;WARNING&quot;</span>   <span class="c1"># 超警告限, 预警</span>
+        <span class="k">return</span> <span class="s2">&quot;NORMAL&quot;</span>
+
+<span class="c1"># 示例: 3号压铸机压射压力</span>
+<span class="n">pressure_history</span> <span class="o">=</span> <span class="n">load_history</span><span class="p">(</span><span class="s2">&quot;Equip_LK9000T_003&quot;</span><span class="p">,</span> <span class="s2">&quot;CastingPressure&quot;</span><span class="p">)</span>
+<span class="n">spm</span> <span class="o">=</span> <span class="n">SPCMonitor</span><span class="p">(</span><span class="n">pressure_history</span><span class="p">,</span> <span class="s2">&quot;压射压力&quot;</span><span class="p">)</span>
+<span class="c1"># 实时检测</span>
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">real_time_stream</span><span class="p">:</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">spm</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">!=</span> <span class="s2">&quot;NORMAL&quot;</span><span class="p">:</span>
+        <span class="n">trigger_agent</span><span class="p">({</span>
+            <span class="s2">&quot;device_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Equip_LK9000T_003&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="s2">&quot;压射压力&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">sample</span><span class="p">,</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+            <span class="s2">&quot;ucl&quot;</span><span class="p">:</span> <span class="n">spm</span><span class="o">.</span><span class="n">ucl</span><span class="p">,</span> <span class="s2">&quot;lcl&quot;</span><span class="p">:</span> <span class="n">spm</span><span class="o">.</span><span class="n">lcl</span>
+        <span class="p">})</span>
+</code></pre></div>
+
+<h3 id="73">7.3 边缘计算硬件选型建议</h3>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>硬件</th>
+<th>部署位置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>产线边缘网关</td>
+<td>研华 UNO-2484G + GPU 模块</td>
+<td>每条产线 1 台</td>
+<td>数据采集 + SPC + 孤立森林</td>
+</tr>
+<tr>
+<td>车间边缘服务器</td>
+<td>华为 Atlas 500 Pro</td>
+<td>每车间 1 台</td>
+<td>LSTM 推理 + 子图缓存</td>
+</tr>
+<tr>
+<td>云端 GPU 集群</td>
+<td>赛力斯私有云</td>
+<td>数据中心</td>
+<td>Graph RAG + Agent + 模型训练</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_7">八、数字孪生联动与执行闭环</h2>
+<h3 id="81">8.1 数字孪生验证流程</h3>
+<div class="codehilite"><pre><span></span><code>Agent 生成处置方案
+       ↓
+┌──────────────────────────────┐
+│ Step 1: 方案数字化建模       │
+│ - 提取关键参数变更           │
+│ - 构建仿真场景               │
+└──────────────────────────────┘
+       ↓
+┌──────────────────────────────┐
+│ Step 2: 30 分钟前向仿真      │
+│ - 模拟方案执行后产线状态     │
+│ - 预测质量指标变化           │
+│ - 检测次生风险(堆料/节拍)    │
+└──────────────────────────────┘
+       ↓
+┌──────────────────────────────┐
+│ Step 3: 安全性评估           │
+│ - 质量指标是否改善?          │
+│ - 是否引发新异常?            │
+│ - 节拍是否可接受?            │
+└──────────────────────────────┘
+       ↓
+   ┌────────┐
+   │ 通过?  │
+   └───┬────┘
+    是 │     │ 否
+       ↓     ↓
+   自动执行  升级人工
+   (PLC联动) (Aily通知)
+</code></pre></div>
+
+<h3 id="82">8.2 执行层联动接口</h3>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>联动动作</th>
+<th>触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MES</td>
+<td>调整排产计划</td>
+<td>L2 中风险</td>
+</tr>
+<tr>
+<td>PLC</td>
+<td>降速/停机</td>
+<td>L3 高风险 + 数字孪生验证通过</td>
+</tr>
+<tr>
+<td>AGV</td>
+<td>物料路径重规划</td>
+<td>设备停机时</td>
+</tr>
+<tr>
+<td>质量门</td>
+<td>拦截可疑批次</td>
+<td>质量风险预警</td>
+</tr>
+<tr>
+<td>飞书多维表格</td>
+<td>生成工单</td>
+<td>所有级别</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">九、知识图谱持续进化机制</h2>
+<h3 id="91">9.1 知识来源四象限</h3>
+<table>
+<thead>
+<tr>
+<th>知识来源</th>
+<th>结构化程度</th>
+<th>更新频率</th>
+<th>采集方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设备手册/工艺规范</td>
+<td>高(结构化文档)</td>
+<td>季度</td>
+<td>NLP 抽取 + 人工校验</td>
+</tr>
+<tr>
+<td>维修记录/MES工单</td>
+<td>中(半结构化)</td>
+<td>日</td>
+<td>ETL + 实体对齐</td>
+</tr>
+<tr>
+<td>老师傅经验</td>
+<td>低(隐性知识)</td>
+<td>持续</td>
+<td>访谈录音转写 + LLM 抽取</td>
+</tr>
+<tr>
+<td>处置案例库</td>
+<td>高(结构化)</td>
+<td>实时</td>
+<td>Agent 自动入库</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92">9.2 老师傅经验数字化流程</h3>
+<div class="codehilite"><pre><span></span><code>┌────────────────────────────────────────┐
+│ Step 1: 经验采集                       │
+│ - 访谈录音(飞书妙记自动转写)           │
+│ - 现场操作视频(视觉识别动作)           │
+│ - 工单备注文本                         │
+└────────────────────────────────────────┘
+            ↓
+┌────────────────────────────────────────┐
+│ Step 2: LLM 抽取实体关系               │
+│ Prompt: &quot;从以下文本抽取设备-工艺-质量  │
+│ 三元关系, 输出 JSON&quot;                   │
+│ 输入: &quot;压铸机声音发闷, 多半是液压缸    │
+│ 密封件磨损, 会导致压力波动, 铸件气孔&quot;  │
+│ 输出: {                                │
+│   &quot;device&quot;: &quot;压铸机&quot;,                  │
+│   &quot;symptom&quot;: &quot;声音发闷&quot;,               │
+│   &quot;root_cause&quot;: &quot;液压缸密封件磨损&quot;,    │
+│   &quot;process_impact&quot;: &quot;压力波动&quot;,        │
+│   &quot;quality_impact&quot;: &quot;铸件气孔&quot;         │
+│ }                                      │
+└────────────────────────────────────────┘
+            ↓
+┌────────────────────────────────────────┐
+│ Step 3: 本体对齐 + 入库                │
+│ - 实体链接到本体类(压铸机→CastingMachine)│
+│ - 关系映射到本体属性(affectsQuality)   │
+│ - 写入 Neo4j + 向量库双索引            │
+└────────────────────────────────────────┘
+            ↓
+┌────────────────────────────────────────┐
+│ Step 4: 验证 + 反馈                    │
+│ - 老师傅确认抽取准确性                 │
+│ - 后续案例验证规则有效性               │
+│ - 错误规则自动降权                     │
+└────────────────────────────────────────┘
+</code></pre></div>
+
+<h3 id="93">9.3 知识图谱进化指标</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>一期目标</th>
+<th>三期目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实体数量</td>
+<td>5,000+</td>
+<td>50,000+</td>
+</tr>
+<tr>
+<td>关系数量</td>
+<td>15,000+</td>
+<td>200,000+</td>
+</tr>
+<tr>
+<td>案例库规模</td>
+<td>1,000+</td>
+<td>10,000+</td>
+</tr>
+<tr>
+<td>本体规则数</td>
+<td>200+</td>
+<td>1,000+</td>
+</tr>
+<tr>
+<td>规则准确率</td>
+<td>≥ 85%</td>
+<td>≥ 92%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_9">十、数据安全与合规设计</h2>
+<h3 id="101">10.1 数据分级与脱敏</h3>
+<table>
+<thead>
+<tr>
+<th>数据等级</th>
+<th>示例</th>
+<th>处理策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公开级</td>
+<td>设备型号、工艺标准</td>
+<td>原文存储</td>
+</tr>
+<tr>
+<td>内部级</td>
+<td>生产参数、质量指标</td>
+<td>脱敏存储(数值归一化)</td>
+</tr>
+<tr>
+<td>机密级</td>
+<td>核心工艺配方、良率数据</td>
+<td>加密存储 + 权限控制</td>
+</tr>
+<tr>
+<td>客户级</td>
+<td>"一车一档"车主信息</td>
+<td>不入图谱, 仅关联ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="102">10.2 权限控制矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>知识图谱</th>
+<th>工单</th>
+<th>执行层</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一线工人</td>
+<td>只读(本产线)</td>
+<td>处理</td>
+<td>无</td>
+</tr>
+<tr>
+<td>工艺工程师</td>
+<td>读写(本车间)</td>
+<td>审批</td>
+<td>L2 执行</td>
+</tr>
+<tr>
+<td>质量主管</td>
+<td>读写(全厂)</td>
+<td>审批</td>
+<td>L3 建议</td>
+</tr>
+<tr>
+<td>系统管理员</td>
+<td>全权限</td>
+<td>全权限</td>
+<td>配置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="103">10.3 合规要点</h3>
+<ul>
+<li><strong>数据不出厂</strong>：所有数据在赛力斯私有云处理，不依赖公有云 LLM（本地化部署 DeepSeek）</li>
+<li><strong>审计日志</strong>：Agent 每次决策留痕，可追溯完整推理链</li>
+<li><strong>人工兜底</strong>：L3 高风险必须人工审批，AI 不具有最终决策权</li>
+</ul>
+<hr />
+<h2 id="_10">十一、竞品对比深度矩阵</h2>
+<h3 id="111">11.1 技术能力对比</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>特斯拉</th>
+<th>比亚迪</th>
+<th>传统工业AI(西门子MindSphere)</th>
+<th><strong>「天枢」</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 质检</td>
+<td>FSD反向复用, 漏检2%→0.1%</td>
+<td>DeepSeek, 漏检0.3%→0.05%</td>
+<td>视觉检测为主</td>
+<td>检测+推理一体</td>
+</tr>
+<tr>
+<td>根因分析</td>
+<td>人工排查</td>
+<td>人工排查</td>
+<td>规则引擎(浅层)</td>
+<td>本体论+Graph RAG(深层)</td>
+</tr>
+<tr>
+<td>决策自主性</td>
+<td>检测→人工</td>
+<td>检测→人工</td>
+<td>辅助决策</td>
+<td>ReAct Agent自主编排</td>
+</tr>
+<tr>
+<td>知识沉淀</td>
+<td>无公开</td>
+<td>无公开</td>
+<td>数据仓库</td>
+<td>KG持续进化飞轮</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>黑盒</td>
+<td>黑盒</td>
+<td>规则可追溯</td>
+<td>SWRL证据链可视化</td>
+</tr>
+<tr>
+<td>飞书集成</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+<td>Aily+多维表格原生</td>
+</tr>
+</tbody>
+</table>
+<h3 id="112">11.2 范式定位图</h3>
+<div class="codehilite"><pre><span></span><code>                    决策自主性
+                        ▲
+                高      │      低
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+   深   │   「天枢」   │   传统AI     │
+   推   │   (蓝海)     │   助手       │
+   理   │              │              │
+        ├──────────────┼──────────────┤
+        │              │              │
+   浅   │  特斯拉/比亚迪│   人工巡检   │
+   推   │  (AI质检)    │              │
+   理   │              │              │
+        └──────────────┴──────────────┘
+                       │
+</code></pre></div>
+
+<p><strong>核心结论</strong>：竞品扎堆"浅推理+低自主"象限（AI质检），"深推理+高自主"象限是空白——这正是「天枢」的蓝海定位，也是赛力斯命题的独特性所在。</p>
+<hr />
+<h2 id="-">十二、用户痛点-技术能力映射</h2>
+<h3 id="121">12.1 问界用户真实反馈深度分析</h3>
+<table>
+<thead>
+<tr>
+<th>用户痛点</th>
+<th>反馈详情</th>
+<th>痛点本质</th>
+<th>「天枢」对应能力</th>
+<th>预期改善</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M7低频共振"轰头压耳"</td>
+<td>两轮止震处理未消除</td>
+<td>根因诊断能力不足</td>
+<td>Graph RAG跨实体关联推理</td>
+<td>根因定位 4h→10min</td>
+</tr>
+<tr>
+<td>装配瑕疵(座椅/盖板/线路)</td>
+<td>提车4-5天出现</td>
+<td>设备/工艺隐性偏差</td>
+<td>设备-质量因果链预判</td>
+<td>批次质量问题-40%~60%</td>
+</tr>
+<tr>
+<td>智驾误触发</td>
+<td>M5误触发4次致车祸</td>
+<td>缺乏可解释证据链</td>
+<td>SWRL规则可追溯</td>
+<td>每次决策带证据链</td>
+</tr>
+<tr>
+<td>售后"等OTA修复"</td>
+<td>标准拖延回复</td>
+<td>缺乏主动管控闭环</td>
+<td>Agent 7×24主动监控</td>
+<td>响应 数小时→5min</td>
+</tr>
+<tr>
+<td>数据不对称维权难</td>
+<td>厂商掌握全部数据</td>
+<td>缺乏可追溯记录</td>
+<td>处置记录入库可追溯</td>
+<td>质量事件可复盘</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122">12.2 痛点验证逻辑</h3>
+<p>用户反馈的"低频共振售后处理仍未消除"，本质是<strong>传统AI单点检测做不到跨实体根因推理</strong>——共振问题涉及车身结构、装配工艺、材料批次多个维度，向量检索无法建立因果链。「天枢」的本体论+Graph RAG正是为此设计：通过本体规则将"车身振动异常→装配扭矩偏差→结构共振"的隐性因果链显式化，让Agent能像资深工程师一样"顺藤摸瓜"定位根因。</p>
+<hr />
+<h2 id="poc">十三、POC 实施路径与里程碑</h2>
+<h3 id="131-gantt">13.1 三期推广 Gantt 图</h3>
+<div class="codehilite"><pre><span></span><code>2026 Q4                    2027 Q1                    2027 Q2-Q3
+├──────────────────────────┼──────────────────────────┼──────────────────────────┤
+│  一期: CTP电池产线       │  二期: 焊装/涂装车间     │  三期: 供应链伙伴        │
+│  + 压铸单元              │                          │                          │
+│                          │                          │                          │
+│  M1: 本体建模            │  M5: 本体扩展焊装工艺    │  M9: 本体泛化供应商设备  │
+│  M2: KG构建(Neo4j)       │  M6: Agent多场景训练     │  M10: 联邦学习数据隐私   │
+│  M3: Graph RAG原型       │  M7: 飞书Aily全员上线    │  M11: 行业标准输出       │
+│  M4: 飞书工单流          │  M8: 数字孪生联调        │  M12: 开放API生态        │
+│                          │                          │                          │
+│  验证: 根因定位POC       │  目标: 2车间全量上线     │  目标: 行业级推广        │
+│  可解释推理闭环          │  质量风险响应&lt;5min       │  套框架复制其他车企      │
+└──────────────────────────┴──────────────────────────┴──────────────────────────┘
+</code></pre></div>
+
+<h3 id="132-wbs">13.2 一期 WBS 工作分解</h3>
+<table>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>任务</th>
+<th>周期</th>
+<th>交付物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1 本体建模</td>
+<td>设备-工艺-质量三元本体设计</td>
+<td>2周</td>
+<td>OWL本体文件(Protégé)</td>
+</tr>
+<tr>
+<td>M1 本体建模</td>
+<td>SWRL推理规则定义</td>
+<td>1周</td>
+<td>200+规则集</td>
+</tr>
+<tr>
+<td>M2 KG构建</td>
+<td>Neo4j部署+数据接入</td>
+<td>1周</td>
+<td>KG服务上线</td>
+</tr>
+<tr>
+<td>M2 KG构建</td>
+<td>设备/工艺/质量实体抽取</td>
+<td>2周</td>
+<td>5000+实体入库</td>
+</tr>
+<tr>
+<td>M3 Graph RAG</td>
+<td>三阶段检索流程实现</td>
+<td>2周</td>
+<td>引擎服务</td>
+</tr>
+<tr>
+<td>M3 Graph RAG</td>
+<td>LLM证据链生成调优</td>
+<td>1周</td>
+<td>准确率≥85%</td>
+</tr>
+<tr>
+<td>M4 飞书工单</td>
+<td>多维表格模板设计</td>
+<td>1周</td>
+<td>工单表+看板表</td>
+</tr>
+<tr>
+<td>M4 飞书工单</td>
+<td>Aily Bot开发+联调</td>
+<td>2周</td>
+<td>Bot上线</td>
+</tr>
+<tr>
+<td>验证</td>
+<td>真实异常案例回测</td>
+<td>2周</td>
+<td>验证报告</td>
+</tr>
+</tbody>
+</table>
+<h3 id="133">13.3 可行性依据</h3>
+<table>
+<thead>
+<tr>
+<th>赛力斯已有基础</th>
+<th>「天枢」对接方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5G园区网</td>
+<td>边缘网关数据回传通道</td>
+</tr>
+<tr>
+<td>数字孪生平台</td>
+<td>执行层仿真验证</td>
+</tr>
+<tr>
+<td>"一车一档"数据底座</td>
+<td>质量本体数据源</td>
+</tr>
+<tr>
+<td>飞书协作平台(100%激活)</td>
+<td>Aily+多维表格原生集成</td>
+</tr>
+<tr>
+<td>IoT数据中台</td>
+<td>感知层数据接入</td>
+</tr>
+<tr>
+<td>MES系统</td>
+<td>执行层排产联动</td>
+</tr>
+<tr>
+<td>174个AI场景</td>
+<td>「天枢」是质变式升级, 非推倒重来</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_11">十四、技术选型对比论证</h2>
+<h3 id="141">14.1 知识图谱数据库</h3>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>优势</th>
+<th>劣势</th>
+<th>决策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Neo4j</strong></td>
+<td>成熟、Cypher易用、社区版免费</td>
+<td>单机性能有限</td>
+<td>✅ 一期选型</td>
+</tr>
+<tr>
+<td>ArangoDB</td>
+<td>多模型(图+文档)</td>
+<td>生态弱</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>NebulaGraph</td>
+<td>分布式性能强</td>
+<td>学习曲线陡</td>
+<td>二期考虑</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-agent">14.2 Agent 框架</h3>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>优势</th>
+<th>劣势</th>
+<th>决策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LangGraph</strong></td>
+<td>Python生态成熟、状态机清晰</td>
+<td>较新</td>
+<td>✅ 选型</td>
+</tr>
+<tr>
+<td>AutoGen</td>
+<td>多Agent对话</td>
+<td>控制流弱</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>CrewAI</td>
+<td>角色分工清晰</td>
+<td>工业场景支持弱</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="143-llm">14.3 LLM 选型</h3>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>优势</th>
+<th>劣势</th>
+<th>决策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DeepSeek-V3</strong></td>
+<td>赛力斯已合作、私有化部署</td>
+<td>推理能力中等</td>
+<td>✅ 选型</td>
+</tr>
+<tr>
+<td>通义千问</td>
+<td>国产合规</td>
+<td>工业语料弱</td>
+<td>备选</td>
+</tr>
+<tr>
+<td>GPT-4</td>
+<td>推理最强</td>
+<td>数据出国合规风险</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="144">14.4 本体推理机</h3>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>优势</th>
+<th>劣势</th>
+<th>决策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pellet</strong></td>
+<td>OWL标准、SWRL支持</td>
+<td>Java生态</td>
+<td>✅ 选型</td>
+</tr>
+<tr>
+<td>HermiT</td>
+<td>性能优</td>
+<td>SWRL支持弱</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Stardog</td>
+<td>一体化</td>
+<td>商业收费</td>
+<td>二期考虑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="kpi">十五、KPI 仪表盘与量化指标</h2>
+<h3 id="151-kpi">15.1 核心 KPI</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>基线</th>
+<th>一期目标</th>
+<th>三期目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>质量风险响应时间</td>
+<td>数小时</td>
+<td>&lt; 30min</td>
+<td>&lt; 5min</td>
+</tr>
+<tr>
+<td>根因定位准确率</td>
+<td>人工60%</td>
+<td>85%</td>
+<td>92%</td>
+</tr>
+<tr>
+<td>设备原因批量质量事件</td>
+<td>基线</td>
+<td>-40%</td>
+<td>-60%</td>
+</tr>
+<tr>
+<td>非计划停机时长</td>
+<td>基线</td>
+<td>-20%</td>
+<td>-40%</td>
+</tr>
+<tr>
+<td>关键设备经验数字化率</td>
+<td>&lt;30%</td>
+<td>70%</td>
+<td>90%+</td>
+</tr>
+<tr>
+<td>质量工单闭环率</td>
+<td>72%</td>
+<td>85%</td>
+<td>92%+</td>
+</tr>
+<tr>
+<td>重复异常发生率</td>
+<td>基线</td>
+<td>-25%</td>
+<td>-40%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="152">15.2 飞书多维表格仪表盘设计</h3>
+<p><strong>看板1：实时风险地图</strong><br />
+- 全厂设备健康度热力图(绿/黄/红)<br />
+- 当前活跃风险工单数<br />
+- 24h风险趋势曲线</p>
+<p><strong>看板2：Agent 效能</strong><br />
+- 根因定位准确率(周)<br />
+- 平均证据链长度<br />
+- Agent 自主决策占比<br />
+- 人工介入率</p>
+<p><strong>看板3：知识飞轮</strong><br />
+- 知识图谱实体/关系数增长曲线<br />
+- 案例库规模<br />
+- 规则准确率<br />
+- 老师傅经验数字化数量</p>
+<hr />
+<h2 id="_12">十六、风险与降级策略</h2>
+<h3 id="161">16.1 技术风险与应对</h3>
+<table>
+<thead>
+<tr>
+<th>风险</th>
+<th>概率</th>
+<th>影响</th>
+<th>应对策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本体规则准确率不足</td>
+<td>中</td>
+<td>高</td>
+<td>人工校验+持续迭代, 一期规则数控制在200+</td>
+</tr>
+<tr>
+<td>Graph RAG 检索延迟超标</td>
+<td>中</td>
+<td>中</td>
+<td>子图缓存+预计算, P95&lt;3s</td>
+</tr>
+<tr>
+<td>LLM 推理幻觉</td>
+<td>高</td>
+<td>高</td>
+<td>证据链强约束+置信度阈值, &lt;70%不自主执行</td>
+</tr>
+<tr>
+<td>边缘计算资源不足</td>
+<td>低</td>
+<td>中</td>
+<td>分级部署, 关键设备优先</td>
+</tr>
+<tr>
+<td>数据质量差</td>
+<td>中</td>
+<td>高</td>
+<td>数据治理先行, 一期聚焦数据完善的CTP产线</td>
+</tr>
+</tbody>
+</table>
+<h3 id="162-graceful-degradation">16.2 降级策略（Graceful Degradation）</h3>
+<div class="codehilite"><pre><span></span><code>正常模式: 全自动 Agent 闭环
+    ↓ (LLM服务不可用)
+降级模式1: 本体推理+规则引擎(无LLM)
+    ↓ (知识图谱不可用)
+降级模式2: SPC控制限+人工通知
+    ↓ (边缘计算不可用)
+降级模式3: 纯人工巡检(传统模式)
+</code></pre></div>
+
+<p><strong>设计原则</strong>：任何情况下系统不"罢工"，至少回到传统人工模式，绝不能因AI故障导致产线停摆。</p>
+<hr />
+<h2 id="_13">十七、参考资料清单</h2>
+<h3 id="_14">行业报告</h3>
+<ol>
+<li>麦肯锡《The state of AI in 2023》——75%企业AI项目上线后被停用，根因是缺乏自主闭环</li>
+<li>Gartner《Top Trends in Data and Analytics》——AI Ready能力列为十大关键因素</li>
+<li>康波演讲(赛力斯董事、副总裁)——"汽车产业从软件定义汽车向AI定义汽车转型"</li>
+<li>飞书首席商业官林婭——"赛力斯选飞书，不是选工具，是选AI时代一起成长的朋友"</li>
+</ol>
+<h3 id="_15">竞品案例</h3>
+<ol start="5">
+<li>特斯拉FSD反向复用工业质检——漏检率2%→0.1%</li>
+<li>比亚迪DeepSeek缺陷检测——漏检率0.3%→0.05%，年减质量损失超2亿元</li>
+<li>GE航空预测性维护——非计划停机-30%</li>
+<li>西门子MindSphere工业AI平台</li>
+</ol>
+<h3 id="_16">赛力斯公开信息</h3>
+<ol start="9">
+<li>SAI 2.0上线数据：174个一线AI场景，100%激活率，7500+日活，产线巡检2h→5min</li>
+<li>超级工厂：AI大脑调度3000台机器人，核心工序自动化率100%</li>
+<li>IT部长雷相其："AI场景不是规划出来的，是从一线长出来的"</li>
+</ol>
+<h3 id="_17">技术参考</h3>
+<ol start="12">
+<li>OWL本体论标准——W3C官方规范</li>
+<li>Graph RAG论文——Microsoft Research, 2024 "From Local to Global: A Graph RAG Approach"</li>
+<li>ReAct Agent框架——Yao et al., ICLR 2023 "ReAct: Synergizing Reasoning and Acting"</li>
+<li>LangGraph文档——LangChain官方</li>
+<li>SWRL规则语言——W3C标准</li>
+<li>飞书Aily智能体开发文档——飞书开放平台</li>
+<li>Neo4j Cypher手册——Neo4j官方</li>
+</ol>
+<h3 id="_18">用户反馈来源</h3>
+<ol start="19">
+<li>问界M7低频共振用户反馈——车质网、懂车帝论坛</li>
+<li>智驾误触发用户反馈——问界车主社区、小红书</li>
+</ol>
+<hr />
+<h2 id="_19">十八、差异化加分点总结</h2>
+<h3 id="181">18.1 五大差异化卖点</h3>
+<ol>
+<li>
+<p><strong>范式哲学跃迁</strong>：从"被动问答"到"主动发现"——这不是技术升级，是产品哲学的跃迁。赛力斯命题原文明确说"传统工业知识图谱大多停留在被动问答层面"，我们的方案精准回应这一痛点。</p>
+</li>
+<li>
+<p><strong>可解释性是工业信任前提</strong>：本体论SWRL规则推理输出完整证据链，让"AI说了算"变为"AI说了为什么"——这是工业场景采纳AI的硬性门槛，向量RAG黑盒给不了。</p>
+</li>
+<li>
+<p><strong>飞书非典型工业应用</strong>：把办公协作的Aily改造为产线"虚拟质量工程师"，多维表格替代传统MES工单系统——跨场景映射能力正是评审维度"AI应用创新性"要的分。</p>
+</li>
+<li>
+<p><strong>真实痛点锚定</strong>：M7低频共振、智驾误触发等用户反馈，证明方案回应真实需求而非空中楼阁——评委最容易记住"有数据支撑的痛点"。</p>
+</li>
+<li>
+<p><strong>三期推广路径</strong>：不是一次性Demo，是可泛化至全行业的架构——本体+KG+Agent架构可平滑迁移至其他整车厂和离散制造场景，呼应"可推广性"评分维度。</p>
+</li>
+</ol>
+<h3 id="182">18.2 一句话总结</h3>
+<blockquote>
+<p>「天枢」不是又一个AI质检工具，是赛力斯从"AI工具"迈向"AI组织"的关键支点——用本体论建模设备-工艺-质量因果链，让Agent具备逻辑推理能力，在设备退化演变为质量事故前，提前规避风险。这是"AI定义汽车"时代，质量管控的范式重构。</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>最后提醒</strong>：<br />
+1. 粘贴至飞书文档（原生支持Markdown）→ 设置"互联网可访问"→ 复制公开链接（若为企业版飞书账号需管理员审批，可改用个人飞书/GitHub Gist/Notion）<br />
+2. 填入报名表"团队补充材料（链接格式）"字段<br />
+3. 如有GitHub项目/技术博客，一并填入（多个链接可一并上传）<br />
+4. ⚠️ <strong>报名 7 月 19 日 24:00 截止</strong>，优先保证 Part1+Part2 提交，补充材料是锦上添花</p>
+</blockquote>
+</main>
+
+</body>
+</html>
